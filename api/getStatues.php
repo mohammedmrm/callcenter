@@ -9,7 +9,7 @@ access();
 $msg="";
 require_once("../php/dbconnection.php");
 try{
-  $query = "select *, status as label from order_status";
+  $query = "select id as value, status as label from order_status";
   $data = getData($con,$query);
   $success="1";
 } catch(PDOException $ex) {
