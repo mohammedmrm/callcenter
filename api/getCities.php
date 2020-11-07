@@ -9,7 +9,7 @@ access();
 $msg="";
 require_once("../php/dbconnection.php");
 try{
-  $query = "select name as label, id as value from cites where cites.id in (select city_id from callcenter_cities)";
+  $query = "select name as label, id as value from cites where cites.id in (select city_id from callcenter_cities where callcenter_id=".$userid.")";
   $data = getData($con,$query);
   $success="1";
 } catch(PDOException $ex) {

@@ -45,7 +45,7 @@ try{
             left join branches on  branches.id = orders.to_branch
             left join order_status on  order_status.id = orders.order_status_id
             ";
-  $where = "where orders.to_city in (SELECT city_id from callcenter_cities where callcenter_id=".$userid.")";
+  $where = "where orders.to_city in (SELECT city_id from callcenter_cities where callcenter_id=".$userid." )";
   if(!empty($search)){
    $filter .= " and (order_no like '%".$search."%'
                     or customer_name like '%".$search."%'
@@ -53,7 +53,7 @@ try{
                     ";
   }
   if($city > 0){
-   $filter .= " and to_city =".$city;
+   $filter .= " and orders.to_city =".$city;
   }
   if($status > 0){
    $filter .= " and orders.order_status_id =".$status;
@@ -105,5 +105,5 @@ if($success == '1'){
 }
 $code = 200;
 ob_end_clean();
-echo (json_encode(array('code'=>$code,'message'=>$msg,'orders'=>$orders,"success"=>$success,"data"=>$data,'pages'=>$pages,'nextPage'=>$page+2),JSON_PRETTY_PRINT));
+echo (json_encode(array($query,'code'=>$code,'message'=>$msg,'orders'=>$orders,"success"=>$success,"data"=>$data,'pages'=>$pages,'nextPage'=>$page+2),JSON_PRETTY_PRINT));
 ?>
