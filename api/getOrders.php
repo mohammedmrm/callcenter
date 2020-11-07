@@ -55,6 +55,9 @@ try{
   if($city > 0){
    $filter .= " and to_city =".$city;
   }
+  if($status > 0){
+   $filter .= " and orders.order_status_id =".$status;
+  }
   if($store > 0){
    $filter .= " and store_id =".$store;
   }
