@@ -45,7 +45,7 @@ try{
             left join branches on  branches.id = orders.to_branch
             left join order_status on  order_status.id = orders.order_status_id
             ";
-  $where = "where orders.to_city in (SELECT city_id from callcenter_cities where callcenter_id=".$userid." )";
+  $where = "where orders.to_city in (SELECT city_id from callcenter_cities where callcenter_id=".$userid." ) and confirm=1 ";
   if(!empty($search)){
    $filter .= " and (order_no like '%".$search."%'
                     or customer_name like '%".$search."%'
