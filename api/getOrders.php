@@ -70,7 +70,7 @@ try{
       $filter .= " and orders.date between '".$start."' AND '".$end."'";
      }
   if($filter != ""){
-    $filter = preg_replace('/^ and/', '', $filter);
+    //$filter = preg_replace('/^ and/', '', $filter);
     $filter = $where." ".$filter;
     $count .= " ".$filter;
     $query .= " ".$filter;
