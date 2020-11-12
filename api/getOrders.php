@@ -54,7 +54,7 @@ try{
                     ";
   }
   if($callCenterStatus == 1){
-      $filter .= " and orders.callcenter_id  == 0";
+      $filter .= " and orders.callcenter_id  = 0";
   }else if($callCenterStatus == 2){
       $filter .= " and orders.callcenter_id  <> 0";
   }
