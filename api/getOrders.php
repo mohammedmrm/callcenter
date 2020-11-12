@@ -15,6 +15,7 @@ $store = trim($_REQUEST['store']);
 $limit = trim($_REQUEST['limit']);
 $page = trim($_REQUEST['page']);
 $status = $_REQUEST['status'];
+$callCenterStatus = $_REQUEST['callCenterStatus'];
 $orders = 0;
 $msg="";
 if(empty($limit)){
@@ -51,6 +52,11 @@ try{
                     or customer_name like '%".$search."%'
                     or customer_phone like '%".$search."%')
                     ";
+  }
+  if($callCenterStatus == 1){
+      $filter .= " and orders.callcenter_id  == 0";
+  }else if($callCenterStatus == 2){
+      $filter .= " and orders.callcenter_id  <> 0";
   }
   if($city > 0){
    $filter .= " and orders.to_city =".$city;
