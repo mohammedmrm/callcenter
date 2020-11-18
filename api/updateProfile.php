@@ -65,7 +65,7 @@ try{
    }
    if(!empty($password)){
      $password= hashPass($password);
-     $sql = 'update staff set password=?where id=?';
+     $sql = 'update staff set password=? where id=?';
      $result = setData($con,$sql,[$password,$id]);
    }
   if($result > 0){
