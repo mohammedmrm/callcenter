@@ -43,21 +43,30 @@ $v->addRuleMessages([
 
 $v->validate([
     'id'      => [$id,      'required|int'],
-    'name'    => [$name,    'required|min(3)|max(200)'],
+    'name'    => [$name,    '|min(3)|max(200)'],
     'email'   => [$email,   'email'],
-    'phone'   => [$phone,   "required|unique|isPhoneNumber"],
+    'phone'   => [$phone,   "unique|isPhoneNumber"],
     'password'=> [$password,"min(6)|max(20)"],
 ]);
 
 if($v->passes()) {
 try{
-   if(empty($password)){
-   $sql = 'update staff set name = ?, email=?,phone=? where id=?';
-   $result = setData($con,$sql,[$name,$email,$phone,$id]);
-   }else{
-   $password= hashPass($password);
-   $sql = 'update staff set password=?,name = ?, email=?,phone=? where id=?';
-   $result = setData($con,$sql,[$password,$name,$email,$phone,$id]);
+   if(!empty($name)){
+     $sql = 'update staff set name = ? where id=?';
+     $result = setData($con,$sql,[$name,$id]);
+   }
+   if(!empty($email)){
+     $sql = 'update staff set email = ? where id=?';
+     $result = setData($con,$sql,[$email,$id]);
+   }
+   if(!empty($phone)){
+     $sql = 'update staff set phone = ? where id=?';
+     $result = setData($con,$sql,[$phone,$id]);
+   }
+   if(!empty($password)){
+     $password= hashPass($password);
+     $sql = 'update staff set password=?where id=?';
+     $result = setData($con,$sql,[$password,$id]);
    }
   if($result > 0){
     $success = 1;
