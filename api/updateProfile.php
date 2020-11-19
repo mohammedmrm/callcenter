@@ -1,5 +1,5 @@
 <?php
-ob_start(); 
+ob_start();
 session_start();
 header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
@@ -24,13 +24,23 @@ $msg = "";
 $v->addRuleMessage('isPhoneNumber', ' رقم هاتف غير صحيح  ');
 
 $v->addRule('isPhoneNumber', function($value, $input, $args) {
-    return   (bool) preg_match("/^[0-9]{10,15}$/",$value);
+    if(!empty($value)){
+     return   (bool) preg_match("/^[0-9]{10,15}$/",$value);
+    }else{
+     return 1;
+    }
+
 });
 $v->addRuleMessage('unique', 'القيمة المدخلة مستخدمة بالفعل ');
 
 $v->addRule('unique', function($value, $input, $args) {
+  if(!empty($value)){
     $exists = getData($GLOBALS['con'],"SELECT * FROM clients WHERE phone ='".$value."' and id !='".$GLOBALS['id']."'");
     return  ! (bool) count($exists);
+  }else{
+    return 1;
+  }
+
 });
 $v->addRuleMessages([
     'required' => 'الحقل مطلوب',
@@ -43,7 +53,7 @@ $v->addRuleMessages([
 
 $v->validate([
     'id'      => [$id,      'required|int'],
-    'name'    => [$name,    '|min(3)|max(200)'],
+    'name'    => [$name,    'min(3)|max(200)'],
     'email'   => [$email,   'email'],
     'phone'   => [$phone,   "unique|isPhoneNumber"],
     'password'=> [$password,"min(6)|max(20)"],
@@ -79,7 +89,7 @@ try{
 }
 }else{
   $error = [
-           'id'=> implode($v->errors()->get('id')),
+           'token'=> implode($v->errors()->get('id')),
            'name'=> implode($v->errors()->get('name')),
            'email'=>implode($v->errors()->get('email')),
            'phone'=>implode($v->errors()->get('phone')),
