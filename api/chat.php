@@ -27,7 +27,7 @@ try {
             ) a on a.order_id = orders.id
 
             inner join message on a.msg_id = message.id
-            where orders.client_id = ?   and orders.confirm = 1 and invoice_id = 0";
+            where orders.callcenter_id = ?   and orders.confirm = 1 and invoice_id = 0";
 
     $sql = "select message.client_seen,orders.order_no,orders.id,message.id as msg_id,message.message as message,message.date from orders
             inner join (
@@ -37,7 +37,7 @@ try {
             ) a on a.order_id = orders.id
 
             inner join message on a.msg_id = message.id
-            where orders.client_id = ? and orders.confirm = 1  and invoice_id = 0
+            where orders.callcenter_id = ? and orders.confirm = 1  and invoice_id = 0
             order by message.date";
     $lim = " limit ".(($page-1) * $limit).",".$limit;
     $sql .= $lim;
