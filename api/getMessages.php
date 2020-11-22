@@ -36,8 +36,8 @@ try{
           staff.name as staff_name,
           role.name as role_name
           from message
-          left join clients on from_id = clients.id
-          left join staff on from_id = staff.id
+          left join clients on from_id = clients.id   and is_client = 1
+          left join staff on from_id = staff.id  and is_client = 0
           left join role on role.id = staff.role_id
           where order_id = ? and message.id > ?  order by message.date DESC
           ';
