@@ -11,6 +11,8 @@ require_once("../php/dbconnection.php");
 $success = 0;
 $error = [];
 $user_id = $userid;
+$limit = $_REQUEST['limit'];
+$page = $_REQUEST['page'];
 if(empty($limit)){
  $limit = 10;
 }
@@ -27,7 +29,7 @@ try {
             ) a on a.order_id = orders.id
 
             inner join message on a.msg_id = message.id
-            where orders.callcenter_id = ?   and orders.confirm = 1 and invoice_id = 0";
+            where orders.to_city in (select city_id from callcenter_cities where callcenter_id=?)   and orders.confirm = 1 and invoice_id = 0";
 
     $sql = "select message.client_seen,orders.order_no,orders.id,message.id as msg_id,message.message as message,message.date from orders
             inner join (
@@ -37,7 +39,7 @@ try {
             ) a on a.order_id = orders.id
 
             inner join message on a.msg_id = message.id
-            where orders.callcenter_id = ? and orders.confirm = 1  and invoice_id = 0
+            where orders.to_city in ( select city_id from callcenter_cities where callcenter_id=? ) and orders.confirm = 1  and invoice_id = 0
             order by message.date";
     $lim = " limit ".(($page-1) * $limit).",".$limit;
     $sql .= $lim;
