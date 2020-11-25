@@ -74,7 +74,9 @@
               $i++;
             }
             // Notify an interest with a notification
-            $r = $expo->notify([$channelName], $notification);
+            if($channelName){
+              $r = $expo->notify([$channelName], $notification);
+            }
         } catch (Exception $e) {
             $r = $e;
         }
