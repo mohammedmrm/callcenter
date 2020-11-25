@@ -40,7 +40,7 @@ try {
 
             inner join message on a.msg_id = message.id
             where orders.to_city in ( select city_id from callcenter_cities where callcenter_id=? ) and orders.confirm = 1  and invoice_id = 0
-            order by message.date";
+            order by message.date DESC";
     $lim = " limit ".(($page-1) * $limit).",".$limit;
     $sql .= $lim;
     $count = getData($con,$count,[$userid]);
