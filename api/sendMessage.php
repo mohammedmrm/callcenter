@@ -36,7 +36,7 @@ $v->validate([
 if($v->passes()) {
   try{
   $sql = 'insert into message (message,order_id,from_id,is_client) values (?,?,?,?)';
-  $result = setData($con,$sql,[$message,$order_id,$userid,1]);
+  $result = setData($con,$sql,[$message,$order_id,$userid,0]);
   if($result > 0){
     $sql = "select staff.token as s_token, clients.token as c_token from orders inner join staff
             on
