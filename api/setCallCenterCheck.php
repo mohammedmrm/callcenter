@@ -9,7 +9,6 @@ require_once("../php/dbconnection.php");
 $id= $_REQUEST['orderid'];
 $success = 0;
 $msg="";
-require_once("dbconnection.php");
 use Violin\Violin;
 require_once('../validator/autoload.php');
 $v = new Violin;
